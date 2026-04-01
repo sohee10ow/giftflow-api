@@ -31,7 +31,7 @@ class GiftflowApiApplicationTests {
     }
 
     @Test
-    void healthAndApiDocsReturnOkStatus() throws Exception {
+    void apiDocsEndpointReturnsConfiguredTitleAndVersion() throws Exception {
         mockMvc.perform(get("/v3/api-docs"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.info.title").value("GiftFlow Api"))

@@ -30,4 +30,14 @@ class GiftflowApiApplicationTests {
             .andExpect(jsonPath("$.service").value("giftflow-api"));
     }
 
+    @Test
+    void healthAndApiDocsReturnOkStatus() throws Exception {
+        mockMvc.perform(get("/v3/api-docs"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.info.title").value("GiftFlow Api"))
+            .andExpect(jsonPath("$.info.version").value("v1"));
+
+
+    }
+
 }

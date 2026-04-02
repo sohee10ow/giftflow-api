@@ -33,5 +33,5 @@ public class ApiResponse<T> {
     }
 
 
-    public static <T> ApiResponse<T> fail
+
 }

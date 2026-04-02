@@ -9,6 +9,35 @@
 ---
 
 ## Latest Handoff
+- **위치:** 회사
+- **작성 시점:** 2026-04-02
+- **현재 단계:** Day 2 완료, Day 3 진입 직전
+- **방금 끝낸 것:**
+  - Swagger/OpenAPI 동작 확인
+  - `ApiResponse` 공통 응답 구조 적용
+  - `GlobalExceptionHandler` 추가
+  - Product API 요청 검증(`@NotBlank`, `@Positive`) 확인
+  - Product API 성공/실패 응답을 공통 포맷으로 통일
+- **지금 진행 중인 것:**
+  - Day 3 준비
+  - PostgreSQL / JPA / Flyway 연결 전 상태 정리
+- **다음에 바로 할 1개 액션:**
+  - `build.gradle`과 `application.yml`에 PostgreSQL, JPA, Flyway 설정을 추가하고 앱이 DB에 붙는지 확인
+- **막힌 점 / 주의할 점:**
+  - 현재 Product API는 메모리성 임시 응답 수준이고 DB 저장은 아직 없다.
+  - Swagger 화면에서 400 응답이 `Undocumented`로 보이는 것은 현재 단계에서는 정상이다.
+  - 다음 단계부터는 로컬 PostgreSQL 실행 여부와 DB 접속 정보가 필요하다.
+- **참고해야 할 파일:**
+  - `build.gradle`
+  - `src/main/resources/application.yml`
+  - `src/main/java/com/giftflow/api/common/ApiResponse.java`
+  - `src/main/java/com/giftflow/api/common/GlobalExceptionHandler.java`
+  - `src/main/java/com/giftflow/api/product/ProductController.java`
+  - `src/main/java/com/giftflow/api/product/CreateProductRequest.java`
+  - `docs/current-status.md`
+- **마지막 사용자 의도:**
+  - Day 3는 회사에서 이어서 진행하기
+
 - **위치:** 미기록
 - **작성 시점:** 초기 생성
 - **현재 단계:** Day 1 마무리 또는 Day 2 진입 전

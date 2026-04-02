@@ -33,5 +33,16 @@ public class ApiResponse<T> {
     }
 
 
+    public static <T> ApiResponse<T> fail(T data, ApiError error, String traceId) {
+        ApiResponse<T> apiResponse = new ApiResponse<>();
+        apiResponse.success = false;
+        apiResponse.data = null;
+        apiResponse.error = error;
+        apiResponse.traceId = traceId;
+
+        return apiResponse;
+    }
+
+
 
 }

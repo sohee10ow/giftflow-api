@@ -1,182 +1,225 @@
-# GiftFlow 2~3주 Fast-Track Plan
+# GiftFlow Fast-Track Plan
 
-## 먼저 결론
-- **권장안: 3주(18일 내외)**
-- **초압축안: 2주(14일 내외)**
-
-3주면 포트폴리오 완성도까지 노릴 수 있고,
-2주는 "핵심 흐름 + 핵심 테스트 + README"까지 끊는 최소 컷이다.
-
-## 운영 원칙
-- 하루 총 2.5~4시간 기준
-- 매일 30~45분은 개념 공부, 나머지는 구현과 테스트
-- 매일 끝날 때 커밋 1개 이상
-- 매 3일마다 README/문서 10분 업데이트
-- 완벽주의 금지, 동작과 설명 가능성을 우선
-
-## 스코프 동결
-### 이번 압축 플랜에서 포함
-- Product / Partner / PinInventory
-- Order Issue / Get / Cancel
-- 상태 전이 / 상태 이력
-- DB Unique 기반 중복 방지
-- callback 전송 + retry scheduler
-- settlement_daily 집계
-- 핵심 통합 테스트
-- README / ERD / 상태 전이도 / 아키텍처 요약
-
-### 이번 압축 플랜에서 제외 또는 후순위
-- Admin 인증/권한 분리
-- Redis
-- CSV export
-- redrive API
-- Docker Compose 고도화
-- Testcontainers
-- 메트릭/대시보드
-- Reconciliation
+## 목적
+이 문서는 **GiftFlow / giftflow-api**를 **2~3주 안에 포트폴리오 수준으로 완성**하기 위한 압축 실행 계획이다.
+기준 원칙은 **완벽함보다 완주**, **설명보다 실행**, **과한 확장보다 핵심 흐름 완성**이다.
 
 ---
 
-## 3주 권장안
+## 기본 모드
+- **기본 모드:** 3주 fast-track
+- **공격적 모드:** 2주 fast-track
+- 기본적으로 3주 계획을 따르되, 사용자가 `2주 모드`를 선언하면 범위를 더 줄인다.
 
-### Week 1 — 뼈대 + 도메인 + 주문 흐름
-#### 목표
-- 서버 뼈대 안정화
-- DB/JPA 연결
-- Product / Partner / Inventory / Order / Cancel까지 연결
+---
 
-#### 반드시 끝내야 할 것
+## 이 플랜에서 반드시 남기는 것
+### Core Scope
+- Product / Partner / PinInventory
+- Issue / Lookup / Cancel API
+- Order Status History
+- `(partner_id, partner_order_id)` unique 기반 중복 방지
+- 재고 예약과 상태 전이
+- callback_delivery + retry scheduler
+- settlement_daily 집계
+- 핵심 테스트
+- README / ERD / 상태 전이 / 아키텍처 / 운영 포인트 정리
+
+### 후순위 또는 생략 가능
+- Admin 인증/권한 분리
+- Redis
+- CSV export
+- callback redrive API
+- Testcontainers
+- observability 확장
+- reconciliation
+
+---
+
+## 성공 기준
+### 기능 관점
+- 파트너 지급/조회/취소 흐름이 동작한다.
+- 재고 부족과 중복 요청이 제어된다.
+- callback 실패 시 재시도된다.
+- settlement_daily 집계가 생성되고 조회된다.
+
+### 포트폴리오 관점
+- README만 읽어도 프로젝트 흐름이 보인다.
+- ERD / 상태 전이 / 아키텍처 / 테스트 시나리오가 정리돼 있다.
+- 면접에서 아래 질문에 답할 수 있다.
+  - 왜 이 도메인을 골랐는가
+  - 중복 지급을 어떻게 막았는가
+  - 오버셀링을 어떻게 막았는가
+  - callback 실패를 어떻게 다뤘는가
+  - 정산을 왜 summary table로 분리했는가
+
+### 신뢰성 관점
+- 정상 지급 테스트
+- 재고 부족 테스트
+- 중복 주문 테스트
+- 상태 전이 차단 테스트
+- callback retry 테스트
+- settlement 집계 테스트
+
+---
+
+## 주차별 계획
+
+## Week 1 — 서버 뼈대 + 핵심 도메인 + 주문 기본 흐름
+### 목표
+- 앱 기본 뼈대를 안정화한다.
+- PostgreSQL/JPA/Flyway를 붙인다.
+- Product / Partner / Inventory / Order 기본 흐름을 만든다.
+
+### 반드시 끝내야 할 것
 - Health + Swagger
-- 공통 응답 / 글로벌 예외 처리
-- PostgreSQL + JPA + Flyway
-- Product CRUD
-- Partner CRUD
+- ApiResponse / GlobalExceptionHandler / Validation
+- PostgreSQL 연결
+- Flyway baseline migration
+- Product API
+- Partner API
 - Pin Batch 업로드 / Inventory 조회
 - Issue Order API
-- Lookup API
-- Cancel API
-- Order Status History
+- Order 조회 API
+- Order Status History 저장
 
-#### 공부 포인트
-- Controller / Service / Repository
+### 공부 포인트
+- Controller / Service / Repository 책임
 - DTO / Validation
 - Entity / JPA / FK
 - Transaction 기초
-- 상태 전이 설계
+- 상태 전이와 이력 테이블 의미
 
-#### 주간 산출물
+### 남겨야 할 산출물
 - Swagger 캡처
 - ERD 초안
-- 상태 전이 표 초안
-- README Progress 섹션
+- 상태 전이 초안
+- README Progress 업데이트
 
-### Week 2 — 정합성 + callback
-#### 목표
-- 중복 방지와 재고 안정성
-- callback 전송/재시도까지 연결
+---
 
-#### 반드시 끝내야 할 것
-- `(partner_id, partner_order_id)` unique constraint
-- duplicate request 처리
+## Week 2 — 정합성 + callback
+### 목표
+- 중복 방지와 재고 정합성을 보강한다.
+- callback 전송과 retry를 붙인다.
+
+### 반드시 끝내야 할 것
+- `issue_order` unique constraint
+- duplicate request 처리 정책 반영
 - 재고 예약 로직 정리
 - 오버셀링 방지 기본 구조
 - callback_delivery 테이블
-- callback 생성
+- callback row 생성
 - WebClient 전송
-- 실패 시 retry scheduler
-- DEAD 상태 전환
+- FAILED → retry → DEAD 흐름
 
-#### 공부 포인트
-- DB unique vs application check
-- lock이 왜 필요한가
-- callback 상태 분리 이유
+### 공부 포인트
+- DB unique vs 애플리케이션 체크
+- 왜 DB가 최종 진실인지
+- 주문 상태와 callback 상태를 왜 분리하는지
 - scheduler / retry / backoff 기초
 
-#### 주간 산출물
-- 동시성/중복 방지 설명 메모
+### 남겨야 할 산출물
+- 중복 방지 설명 메모
 - callback 흐름 다이어그램
 - 실패/재시도 로그 캡처
 
-### Week 3 — 정산 + 테스트 + 포트폴리오
-#### 목표
-- 포트폴리오 가치가 보이는 마지막 핵심
-- 신뢰성을 테스트와 문서로 남기기
+---
 
-#### 반드시 끝내야 할 것
+## Week 3 — settlement + 테스트 + 포트폴리오 정리
+### 목표
+- 포트폴리오 강도가 높은 정산과 테스트를 마무리한다.
+- README와 면접용 설명 포인트를 완성한다.
+
+### 반드시 끝내야 할 것
 - settlement_daily 테이블
 - 일별 집계 job
 - settlement 조회 API
 - 핵심 테스트 6개 이상
-- README 정리
-- 면접용 설명 포인트 정리
+- README 완성
+- 이력서 bullet / 데모 시나리오 초안
 
-#### 핵심 테스트
-- 정상 지급
-- 재고 부족
-- 중복 partnerOrderId
-- 상태 전이 차단
-- callback retry / dead
-- settlement 집계
-
-#### 공부 포인트
+### 공부 포인트
 - 집계 SQL
 - integration test 구조
 - Given / When / Then
-- traceId와 운영 로그 기본
+- traceId / 운영 로그 기본
 
-#### 주간 산출물
-- 테스트 결과 캡처
+### 남겨야 할 산출물
+- 테스트 실행 결과
 - README 완성본
 - 이력서 bullet 3~5개
 - 데모 시나리오
 
 ---
 
-## 2주 초압축안
-
+## 2주 모드 압축 규칙
 ### Week 1
 - Health / Swagger
+- ApiResponse / ExceptionHandler / Validation
 - PostgreSQL / JPA / Flyway
 - Product / Partner / Inventory
 - Issue / Lookup / Cancel
 - 상태 이력
-- 공통 응답 / 예외 처리
 
 ### Week 2
 - Unique constraint
-- 기본 재고 예약 구조
+- 재고 예약 기본 구조
 - callback_delivery + retry scheduler
 - settlement_daily
-- 핵심 테스트 5개
+- 핵심 테스트 5~6개
 - README / ERD / 상태 전이 / 아키텍처 요약
 
-### 2주 모드에서 과감히 뺄 것
-- Redis
-- Admin auth
-- redrive
-- CSV export
-- Testcontainers
-- observability 확장
+### 2주 모드에서 우선 포기할 것
+1. CSV export
+2. Admin auth
+3. Redis
+4. redrive API
+5. Testcontainers
+6. observability 확장
 
 ---
 
-## Day 단위 공통 루틴
-1. 오늘 목표 확인 (5분)
-2. 필요한 개념 1~3개 공부 (30~45분)
-3. 구현 (90~150분)
-4. 테스트 / Swagger 확인 (20~40분)
-5. 커밋 / 문서 메모 (10~20분)
+## 품질 컷라인
+### 최소 컷
+- Order issue / lookup / cancel 동작
+- DB 저장과 상태 이력 확인 가능
+- 중복 주문 방지 가능
+- callback retry 확인 가능
+- settlement 집계 확인 가능
 
-## 각 주차의 컷라인
-### 1주차 끝
-- Order issue / cancel / lookup가 동작해야 함
-- DB 저장과 상태 이력이 보여야 함
+### 좋으면 있는 것
+- 재고 부족 / 중복 주문 / callback retry 자동화 테스트
+- README에 테스트 실행법 정리
+- 운영 포인트(runbook) 요약 포함
 
-### 2주차 끝
-- 중복 방지 + callback retry가 보여야 함
+---
 
-### 3주차 끝
-- settlement + 핵심 테스트 + README까지 있어야 함
+## 하루 운영 규칙
+1. 오늘 목표 1개만 정한다.
+2. 개념 공부는 30~45분 안에서 끝낸다.
+3. 구현은 1~3개 파일 단위로 끊는다.
+4. 테스트 또는 Swagger 확인을 꼭 한다.
+5. 커밋 1개 이상 남긴다.
+6. session-handoff에 다음 재시작 포인트를 남긴다.
 
-## 이 플랜의 철학
-이번 압축 플랜은 **모든 기능을 다 만드는 계획이 아니라, 포트폴리오에서 강하게 보이는 기능만 빠르게 완성하는 계획**이다.
+---
+
+## 판단 우선순위
+1. 지금 이 기능이 포트폴리오 가치에 직접 기여하는가?
+2. 지금 이 기능이 다음 기능의 기반이 되는가?
+3. 지금 이 개념을 바로 코드에 적용할 수 있는가?
+4. 지금 이 테스트가 신뢰성을 설명하는 데 도움이 되는가?
+5. 지금 바로 손을 움직일 수 있는가?
+
+---
+
+## 이번 플랜의 핵심 철학
+이 fast-track 플랜은 **모든 기능을 다 만드는 계획이 아니라**,
+**GiftFlow의 강점이 보이는 기능만 빠르게 완성하는 계획**이다.
+
+즉, 핵심은 다음이다.
+- 단순 CRUD보다 **상태 전이**
+- 기능 수보다 **정합성**
+- 이벤트 흉내보다 **callback retry**
+- 멋진 아키텍처보다 **설명 가능한 구조**

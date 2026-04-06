@@ -4,6 +4,7 @@
 - 이름: **GiftFlow / giftflow-api**
 - 목표: **서버 개발자로 전환하기 위한 학습형 Spring Boot 백엔드 포트폴리오**
 - 모드: **3주 fast-track 기본 / 2주 모드 가능**
+- 마지막 재확인: **2026-04-06 집에서 Day 3 시작**
 
 ---
 
@@ -16,6 +17,7 @@
 - Lombok
 - DevTools
 - Swagger/OpenAPI (설정 완료 여부 확인 필요)
+- PostgreSQL / JPA / Flyway (**아직 미연결**)
 
 ---
 
@@ -43,6 +45,7 @@
 - `product` 패키지 존재
 - `OpenApiConfig` 존재
 - `GlobalExceptionHandler` 존재
+- `ProductController`는 아직 DB 저장 없이 임시 응답 반환
 
 ---
 
@@ -55,13 +58,13 @@
 
 ## 현재 초점
 ### 1순위
-- PostgreSQL 연결
+- `build.gradle`에 JPA / PostgreSQL / Flyway 의존성 추가
 
 ### 2순위
-- JPA 설정 및 첫 엔티티 준비
+- `application.yml`에 datasource / jpa / flyway 설정 추가
 
 ### 3순위
-- Flyway baseline migration 추가
+- 첫 migration 생성 후 앱 기동 확인
 
 ---
 

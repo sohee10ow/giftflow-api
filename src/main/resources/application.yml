@@ -1,6 +1,20 @@
 spring:
   application:
     name: giftflow-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/giftflow
+    username: dodam
+    password: dodam1234
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate # Flyway를 사용하므로 validate 권장
+    show-sql: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true # 기존 DB에 Flyway 적용 시 필요
 
 server:
   port: 8080
@@ -10,3 +24,4 @@ springdoc:
     enabled: true
   swagger-ui:
     path: /swagger-ui.html
+

@@ -9,6 +9,31 @@
 ---
 
 ## Latest Handoff
+- **위치:** 집
+- **작성 시점:** 2026-04-06
+- **현재 단계:** Day 3 시작
+- **방금 끝낸 것:**
+  - Day 2까지의 코드 상태 재확인
+  - `ApiResponse`, `GlobalExceptionHandler`, Product 요청 검증 코드 존재 확인
+  - Product API가 아직 DB 연결 전 임시 응답 단계임을 재확인
+- **지금 진행 중인 것:**
+  - PostgreSQL / JPA / Flyway 연결 시작
+  - Day 3 첫 액션 범위 확정
+- **다음에 바로 할 1개 액션:**
+  - `build.gradle`에 `spring-boot-starter-data-jpa`, PostgreSQL driver, Flyway 의존성을 추가한다
+- **막힌 점 / 주의할 점:**
+  - 아직 datasource 설정과 migration 파일이 없다.
+  - 로컬 PostgreSQL 실행 여부와 접속 정보가 준비돼 있어야 한다.
+  - Product API는 현재 UUID traceId와 임시 ID를 반환하는 학습용 초안이다.
+- **참고해야 할 파일:**
+  - `build.gradle`
+  - `src/main/resources/application.yml`
+  - `src/main/java/com/giftflow/api/product/ProductController.java`
+  - `docs/current-status.md`
+  - `docs/fast-track-day-map.md`
+- **마지막 사용자 의도:**
+  - Day 3를 집에서 바로 시작하고 싶음
+
 - **위치:** 회사
 - **작성 시점:** 2026-04-02
 - **현재 단계:** Day 2 완료, Day 3 진입 직전

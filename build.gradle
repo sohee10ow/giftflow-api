@@ -38,6 +38,16 @@ dependencies {
 	}
 
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6'
+
+	// Spring Data JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// Flyway Core (DB 마이그레이션)
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-database-postgresql'
+
+	// PostgreSQL Driver
+	runtimeOnly 'org.postgresql:postgresql'
 }
 
 tasks.withType(Test).configureEach {

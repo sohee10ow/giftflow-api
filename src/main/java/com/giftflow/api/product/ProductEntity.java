@@ -2,11 +2,13 @@ package com.giftflow.api.product;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jdk.jfr.Timestamp;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Setter @Getter
 @Table(name = "product")
 public class ProductEntity {
     @Id

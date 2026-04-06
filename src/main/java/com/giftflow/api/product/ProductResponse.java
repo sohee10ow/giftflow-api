@@ -2,17 +2,17 @@ package com.giftflow.api.product;
 
 public class ProductResponse {
 
-    private int productId;
+    private Long productId;
     private String name;
     private Integer price;
 
-    public ProductResponse(int productId, String name, Integer price) {
+    public ProductResponse(Long productId, String name, Integer price) {
         this.productId = productId;
         this.name = name;
         this.price = price;
     }
 
-    public int getProductId() {
+    public Long getProductId() {
         return productId;
     }
 

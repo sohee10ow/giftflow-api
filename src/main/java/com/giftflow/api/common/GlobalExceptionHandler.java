@@ -28,4 +28,16 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiResponse<Void>> handleIllegalArgumentException(
+            IllegalArgumentException e
+    ) {
+        ApiError error = new ApiError("NOT_FOUND", e.getMessage());
+        ApiResponse<Void> response = ApiResponse.fail(null, error, UUID.randomUUID().toString());
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(response);
+    }
 }

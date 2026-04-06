@@ -1,5 +1,6 @@
 package com.giftflow.api.product;
 
+import com.giftflow.api.common.ApiError;
 import com.giftflow.api.common.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class ProductController {
     }
     @GetMapping("/admin-api/v1/products/{id}")
     public ApiResponse<ProductResponse> getProduct(@PathVariable long id) {
-        ProductEntity product = productRepository.getReferenceById(id);
+        ProductEntity product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("없는데이터입니다."));
 
         ProductResponse response = new ProductResponse(
                 product.getId(),

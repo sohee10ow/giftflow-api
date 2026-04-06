@@ -4,7 +4,7 @@
 - 이름: **GiftFlow / giftflow-api**
 - 목표: **서버 개발자로 전환하기 위한 학습형 Spring Boot 백엔드 포트폴리오**
 - 모드: **3주 fast-track 기본 / 2주 모드 가능**
-- 마지막 재확인: **2026-04-06 집에서 Day 3 시작**
+- 마지막 재확인: **2026-04-06 회사에서 Day 4 완료**
 
 ---
 
@@ -17,7 +17,7 @@
 - Lombok
 - DevTools
 - Swagger/OpenAPI (설정 완료 여부 확인 필요)
-- PostgreSQL / JPA / Flyway (**아직 미연결**)
+- PostgreSQL / JPA / Flyway
 
 ---
 
@@ -32,7 +32,14 @@
 - [x] Swagger/OpenAPI 설정 및 실행 확인
 - [x] `ApiResponse` 공통 응답 구조 추가
 - [x] `GlobalExceptionHandler` 추가
-- [x] Product create API 초안 작성
+- [x] PostgreSQL 연결
+- [x] JPA / Flyway 연결
+- [x] 첫 migration(`V1__init.sql`) 추가
+- [x] Product 엔티티 / 리포지토리 추가
+- [x] Product create API DB 저장 전환
+- [x] Product 단건 조회 API 추가
+- [x] Product 목록 조회 API 추가
+- [x] Product 조회 실패 `404` 공통 응답 처리
 - [x] Product 요청 검증(`name`, `price`) 적용
 - [x] Product 성공/실패 응답 공통 포맷 확인
 
@@ -45,34 +52,31 @@
 - `product` 패키지 존재
 - `OpenApiConfig` 존재
 - `GlobalExceptionHandler` 존재
-- `ProductController`는 아직 DB 저장 없이 임시 응답 반환
+- `ProductController`는 create/get/list를 JPA 기반으로 처리
 
 ---
 
 ## 현재 단계 해석
-- **Day 2 완료**
-- 현재는 Day 3인 PostgreSQL / JPA / Flyway 연결로 넘어갈 시점
-- Product API는 아직 DB 연결 전 임시 응답 단계이며, 검증과 응답 포맷만 먼저 잡아둔 상태
+- **Day 4 완료**
+- 현재는 Day 5인 Partner 도메인 시작으로 넘어갈 시점
+- Product 도메인은 create/get/list와 not-found 처리까지 완료한 상태
 
 ---
 
 ## 현재 초점
 ### 1순위
-- `build.gradle`에 JPA / PostgreSQL / Flyway 의존성 추가
+- Partner 엔티티와 migration 추가
 
 ### 2순위
-- `application.yml`에 datasource / jpa / flyway 설정 추가
+- Partner create/get/list API 시작
 
 ### 3순위
-- 첫 migration 생성 후 앱 기동 확인
+- Product API 경로 정리와 간단한 검증 점검
 
 ---
 
 ## 아직 시작하지 않은 핵심 항목
-- PostgreSQL 연결
-- JPA 엔티티
-- Flyway migration
-- Product / Partner / Inventory 도메인
+- Partner / Inventory 도메인
 - Issue / Lookup / Cancel API
 - 상태 이력
 - callback_delivery
@@ -88,8 +92,8 @@
 - [x] Git/GitHub
 - [x] Swagger 확정
 - [x] ApiResponse / ExceptionHandler
-- [ ] PostgreSQL / JPA / Flyway
-- [ ] Product
+- [x] PostgreSQL / JPA / Flyway
+- [x] Product
 - [ ] Partner
 - [ ] Inventory
 - [ ] Order Issue / Lookup
@@ -110,15 +114,14 @@
 
 ## 바로 다음 액션
 ### 기본값
-1. `build.gradle`에 PostgreSQL driver, JPA, Flyway 의존성을 추가한다.
-2. `application.yml`에 datasource / jpa / flyway 설정을 넣는다.
-3. 앱이 DB에 붙는지 확인한 뒤 첫 migration을 만든다.
+1. Partner 테이블에 필요한 최소 컬럼을 정한다.
+2. `V2__add_partner.sql` 같은 새 migration을 만든다.
+3. Partner 엔티티 / 리포지토리 / create API부터 붙인다.
 
 ### 다음에 손댈 가능성이 높은 파일
-- `build.gradle`
-- `src/main/resources/application.yml`
 - `src/main/resources/db/migration/...`
-- `src/main/java/com/giftflow/api/product/...`
+- `src/main/java/com/giftflow/api/partner/...`
+- `docs/session-handoff.md`
 
 ---
 
@@ -133,5 +136,6 @@
 - 앱이 바로 실행된다.
 - `/health`가 동작한다.
 - Swagger가 동작한다.
-- Product API가 validation과 공통 응답 포맷으로 동작한다.
-- 다음으로 PostgreSQL / JPA / Flyway 연결을 시작할 수 있다.
+- Product create/get/list API가 DB 기반으로 동작한다.
+- 없는 Product 조회 시 `404` 공통 응답이 반환된다.
+- 다음으로 Partner 도메인을 시작할 수 있다.

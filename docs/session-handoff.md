@@ -9,6 +9,34 @@
 ---
 
 ## Latest Handoff
+- **위치:** 회사
+- **작성 시점:** 2026-04-06
+- **현재 단계:** Day 4 완료, Day 5 시작 전
+- **방금 끝낸 것:**
+  - PostgreSQL / JPA / Flyway 연결 완료
+  - `V1__init.sql`로 `product` 테이블 생성
+  - Product create API를 JPA 저장 기반으로 전환
+  - Product 단건 조회 API 추가
+  - 없는 Product 조회 시 `404` 공통 에러 응답 처리
+  - Product 목록 조회 API 추가
+- **지금 진행 중인 것:**
+  - Product 도메인 최소 범위 마무리 상태
+  - 다음 도메인인 Partner 진입 준비
+- **다음에 바로 할 1개 액션:**
+  - `Partner` 엔티티와 첫 migration 추가 범위를 정하고 create API부터 시작
+- **막힌 점 / 주의할 점:**
+  - 문서 상태가 실제 코드보다 뒤처져 있어서 재시작 시 코드 기준으로 판단해야 한다.
+  - Product 목록 경로는 현재 `/admin-api/v1/products/all` 로 구현돼 있으니, 나중에 `/admin-api/v1/products` 로 정리할지 판단 필요
+  - `createdAt`, `updatedAt` 세팅은 지금 컨트롤러에서 직접 하고 있다.
+- **참고해야 할 파일:**
+  - `src/main/java/com/giftflow/api/product/ProductController.java`
+  - `src/main/java/com/giftflow/api/product/ProductEntity.java`
+  - `src/main/java/com/giftflow/api/product/ProductRepository.java`
+  - `src/main/resources/db/migration/V1__init.sql`
+  - `docs/current-status.md`
+- **마지막 사용자 의도:**
+  - Product list API까지 끝내고, 다음에는 회사에서 이어서 진행하기
+
 - **위치:** 집
 - **작성 시점:** 2026-04-06
 - **현재 단계:** Day 3 시작

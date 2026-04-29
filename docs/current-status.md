@@ -4,7 +4,7 @@
 - 이름: **GiftFlow / giftflow-api**
 - 목표: **서버 개발자로 전환하기 위한 학습형 Spring Boot 백엔드 포트폴리오**
 - 모드: **3주 fast-track 기본 / 2주 모드 가능**
-- 마지막 재확인: **2026-04-06 회사에서 Day 4 완료**
+- 마지막 재확인: **2026-04-27 회사에서 Day 6 진입**
 
 ---
 
@@ -42,6 +42,12 @@
 - [x] Product 조회 실패 `404` 공통 응답 처리
 - [x] Product 요청 검증(`name`, `price`) 적용
 - [x] Product 성공/실패 응답 공통 포맷 확인
+- [x] Partner 테이블 migration 추가
+- [x] Partner 엔티티 / 리포지토리 추가
+- [x] Partner create API 추가
+- [x] Partner 단건 조회 API 추가
+- [x] Partner 목록 조회 API 추가
+- [x] PinInventory 테이블 migration 추가
 
 ### 현재 확인된 구조
 - 루트 패키지: `com.giftflow.api`
@@ -50,33 +56,36 @@
 - `HealthController` 존재
 - `common` 패키지 존재
 - `product` 패키지 존재
+- `partner` 패키지 존재
+- `inventory` 패키지 시작됨
 - `OpenApiConfig` 존재
 - `GlobalExceptionHandler` 존재
 - `ProductController`는 create/get/list를 JPA 기반으로 처리
+- `PartnerController`는 create/get/list를 JPA 기반으로 처리
 
 ---
 
 ## 현재 단계 해석
-- **Day 4 완료**
-- 현재는 Day 5인 Partner 도메인 시작으로 넘어갈 시점
-- Product 도메인은 create/get/list와 not-found 처리까지 완료한 상태
+- **Day 5 완료**
+- 현재는 **Day 6 Inventory 기초** 진행 중
+- `V3__add_pin_inventory.sql`은 완료했고, `PinInventoryEntity` / `PinInventoryRepository` 초안 작성 중
 
 ---
 
 ## 현재 초점
 ### 1순위
-- Partner 엔티티와 migration 추가
+- `PinInventoryEntity` 필드와 JPA 매핑 완성
 
 ### 2순위
-- Partner create/get/list API 시작
+- `PinInventoryRepository`를 `JpaRepository`로 전환
 
 ### 3순위
-- Product API 경로 정리와 간단한 검증 점검
+- batch 업로드 API로 넘어가기 전 inventory 상태값 정의
 
 ---
 
 ## 아직 시작하지 않은 핵심 항목
-- Partner / Inventory 도메인
+- Inventory API
 - Issue / Lookup / Cancel API
 - 상태 이력
 - callback_delivery
@@ -94,7 +103,7 @@
 - [x] ApiResponse / ExceptionHandler
 - [x] PostgreSQL / JPA / Flyway
 - [x] Product
-- [ ] Partner
+- [x] Partner
 - [ ] Inventory
 - [ ] Order Issue / Lookup
 - [ ] Status History
@@ -114,13 +123,14 @@
 
 ## 바로 다음 액션
 ### 기본값
-1. Partner 테이블에 필요한 최소 컬럼을 정한다.
-2. `V2__add_partner.sql` 같은 새 migration을 만든다.
-3. Partner 엔티티 / 리포지토리 / create API부터 붙인다.
+1. `PinInventoryEntity`에 `id`, `productId`, `pinCode`, `status`, `createdAt`, `updatedAt` 필드를 추가한다.
+2. `@Id`, `@GeneratedValue`, `@Column` 매핑을 붙인다.
+3. `PinInventoryRepository`를 `JpaRepository<PinInventoryEntity, Long>`로 만든다.
 
 ### 다음에 손댈 가능성이 높은 파일
-- `src/main/resources/db/migration/...`
-- `src/main/java/com/giftflow/api/partner/...`
+- `src/main/java/com/giftflow/api/inventory/PinInventoryEntity.java`
+- `src/main/java/com/giftflow/api/inventory/PinInventoryRepository.java`
+- `src/main/resources/db/migration/V3__add_pin_inventory.sql`
 - `docs/session-handoff.md`
 
 ---
@@ -138,4 +148,6 @@
 - Swagger가 동작한다.
 - Product create/get/list API가 DB 기반으로 동작한다.
 - 없는 Product 조회 시 `404` 공통 응답이 반환된다.
-- 다음으로 Partner 도메인을 시작할 수 있다.
+- Partner create/get/list API가 DB 기반으로 동작한다.
+- PinInventory 테이블 migration이 존재한다.
+- 다음으로 PinInventory Entity/Repository를 완성할 수 있다.

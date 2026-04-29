@@ -9,6 +9,34 @@
 ---
 
 ## Latest Handoff
+- **위치:** 집
+- **작성 시점:** 2026-04-27
+- **현재 단계:** Day 6 Inventory 기초 진행 중
+- **방금 끝낸 것:**
+  - Partner 테이블 migration 커밋 완료
+  - Partner create/get/list API 구현 및 커밋 완료
+  - `V3__add_pin_inventory.sql` 작성 및 커밋 완료
+  - `./gradlew test` 통과 확인
+- **지금 진행 중인 것:**
+  - Inventory 도메인 시작
+  - `PinInventoryEntity`, `PinInventoryRepository` 초안 파일 생성됨
+- **다음에 바로 할 1개 액션:**
+  - `PinInventoryEntity`에 `id`, `productId`, `pinCode`, `status`, `createdAt`, `updatedAt` 필드와 JPA 매핑을 채운다.
+- **막힌 점 / 주의할 점:**
+  - 현재 `src/main/java/com/giftflow/api/inventory/` 파일 2개는 아직 untracked 상태다.
+  - `PinInventoryRepository`는 아직 `JpaRepository`를 상속하지 않는다.
+  - `product_id`는 우선 `Long productId`로 단순 매핑하고, JPA 연관관계는 나중에 필요할 때만 검토한다.
+  - Product/Partner 목록 경로는 현재 `/all` 패턴을 쓰고 있어 나중에 한 번에 정리할 수 있다.
+- **참고해야 할 파일:**
+  - `src/main/resources/db/migration/V3__add_pin_inventory.sql`
+  - `src/main/java/com/giftflow/api/inventory/PinInventoryEntity.java`
+  - `src/main/java/com/giftflow/api/inventory/PinInventoryRepository.java`
+  - `src/main/java/com/giftflow/api/product/ProductEntity.java`
+  - `src/main/java/com/giftflow/api/product/ProductRepository.java`
+  - `docs/current-status.md`
+- **마지막 사용자 의도:**
+  - 여기서부터는 집에서 Inventory Entity/Repository를 이어서 진행하기
+
 - **위치:** 회사
 - **작성 시점:** 2026-04-06
 - **현재 단계:** Day 4 완료, Day 5 시작 전

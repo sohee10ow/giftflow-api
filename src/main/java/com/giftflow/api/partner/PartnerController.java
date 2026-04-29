@@ -2,6 +2,7 @@ package com.giftflow.api.partner;
 
 import com.giftflow.api.common.ApiResponse;
 
+import com.giftflow.api.inventory.PinInventoryStatus;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,7 +26,7 @@ public class PartnerController {
     public ApiResponse<PartnerResponse> createPartner(@Valid @RequestBody CreatePartnerRequest request) {
         PartnerEntity partner = new PartnerEntity();
         partner.setName(request.getName());
-        partner.setStatus("ACTIVE");
+        partner.setStatus("AVAILABLE");
         partner.setCallbackUrl(request.getCallbackUrl());
 
         LocalDateTime now = LocalDateTime.now();

@@ -1,5 +1,7 @@
 package com.giftflow.api.partner;
 
+import com.giftflow.api.inventory.PinInventoryStatus;
+
 public class PartnerResponse {
 
     private Long partnerId;
